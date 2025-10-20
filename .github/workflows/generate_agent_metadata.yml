@@ -1,0 +1,29 @@
+name: Generate agent metadata
+
+on:
+  push:
+    paths:
+      - '.github/**'
+  workflow_dispatch: {}
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run generator
+        run: |
+          python3 scripts/generate_agent_metadata.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-metadata
+          path: build/agent_metadata.json

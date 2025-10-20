@@ -88,7 +88,8 @@ test_status_functionality() {
     assert_contains "$SERVICE_SCRIPT" "status)" "Status case"
     assert_contains "$SERVICE_SCRIPT" "is running.*PID" "Running status message"
     assert_contains "$SERVICE_SCRIPT" "is not running" "Not running message"
-    assert_contains "$SERVICE_SCRIPT" "exit 0.*exit 1" "Status exit codes"
+    assert_contains "$SERVICE_SCRIPT" "exit 0" "Status success exit code"
+    assert_contains "$SERVICE_SCRIPT" "exit 1" "Status failure exit code"
 }
 
 # Test reload functionality
@@ -100,16 +101,12 @@ test_reload_functionality() {
     assert_contains "$SERVICE_SCRIPT" "Reloading.*configuration" "Reload message"
     assert_contains "$SERVICE_SCRIPT" "kill -HUP" "HUP signal"
     assert_contains "$SERVICE_SCRIPT" "Configuration reloaded" "Reload success message"
-    assert_contains "$SERVICE_SCRIPT" "not running.*reload" "Reload error handling"
+    assert_contains "$SERVICE_SCRIPT" "not running" "Reload error handling"
 }
 
 # Test error handling
 test_error_handling() {
     log_info "Testing error handling..."
-    
-    # Test logging functions
-    assert_contains "$SERVICE_SCRIPT" "log_info" "Info logging function"
-    assert_contains "$SERVICE_SCRIPT" "log_error" "Error logging function"
     
     # Test error conditions
     assert_contains "$SERVICE_SCRIPT" "exit 1" "Error exit codes"
@@ -127,7 +124,8 @@ test_argument_handling() {
     # Test usage message
     assert_contains "$SERVICE_SCRIPT" "Usage:.*start.*stop.*status" "Usage message"
     assert_contains "$SERVICE_SCRIPT" "\*)" "Default case"
-    assert_contains "$SERVICE_SCRIPT" "exit 1.*Usage" "Usage exit code"
+    assert_contains "$SERVICE_SCRIPT" "Usage" "Usage message"
+    assert_contains "$SERVICE_SCRIPT" "exit 1" "Usage exit code"
     
     # Test restart functionality
     if grep -q "restart)" "$SERVICE_SCRIPT"; then

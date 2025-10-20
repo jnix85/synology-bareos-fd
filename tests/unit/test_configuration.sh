@@ -121,7 +121,7 @@ test_ssl_config() {
     # Test certificate permissions
     assert_contains "$POSTINST_SCRIPT" "chmod 600.*key" "Private key permissions"
     assert_contains "$POSTINST_SCRIPT" "chmod 644.*pem" "Certificate permissions"
-    assert_contains "$POSTINST_SCRIPT" "chown.*bareos.*key.*pem" "Certificate ownership"
+    assert_contains "$POSTINST_SCRIPT" "chown.*BAREOS_USER.*key.*pem" "Certificate ownership"
 }
 
 # Test configuration validation
@@ -129,7 +129,7 @@ test_config_validation() {
     log_info "Testing configuration validation..."
     
     # Test validation in scripts
-    assert_contains "$POSTINST_SCRIPT" "bareos-fd -t" "Configuration test"
+    assert_contains "$POSTINST_SCRIPT" "bareos-fd.*-t.*-c" "Configuration test"
     assert_contains "$POSTINST_SCRIPT" "-c.*bareos-fd.conf" "Config file specification"
     
     # Test validation in service script
@@ -141,7 +141,8 @@ test_config_validation() {
     
     # Test final validation in postinst
     assert_contains "$POSTINST_SCRIPT" "Configuration validation failed" "Final validation error"
-    assert_contains "$POSTINST_SCRIPT" "exit 1.*validation" "Validation exit code"
+    assert_contains "$POSTINST_SCRIPT" "Configuration validation failed" "Validation error message"
+    assert_contains "$POSTINST_SCRIPT" "exit 1" "Validation exit code"
 }
 
 # Test backup location configuration

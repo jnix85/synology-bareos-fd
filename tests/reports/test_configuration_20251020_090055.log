@@ -1,0 +1,113 @@
+============================================
+Bareos FD SPK - Configuration Tests
+============================================
+
+[0;34m[INFO][0m Testing configuration template structure...
+[0;32m[PASS][0m Configuration template: File exists - /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Director block: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m FileDaemon block: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Messages block: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Name directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Password directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Port directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Working directory directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m PID directory directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;34m[INFO][0m Testing configuration template content...
+[0;32m[PASS][0m Default director name: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Default client name: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Default port: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Default working directory: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Default PID directory: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Default password placeholder: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Job limit setting: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m File logging directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Log directory: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Director logging: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;34m[INFO][0m Testing generated configuration in postinst...
+[0;32m[PASS][0m Config generation: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Generated Director block: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Generated FileDaemon block: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Generated Messages block: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Director host substitution: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m File daemon name substitution: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Password substitution: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Port substitution: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m SSL conditional: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m TLS enable directive: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m TLS certificate directive: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m TLS key directive: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing configuration directory structure...
+[0;32m[PASS][0m Additional config directory: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Config subdirectories: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Client config file: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Generated client block: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Client job limit: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Compression option: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m GZIP compression: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing SSL/TLS configuration...
+[0;32m[PASS][0m RSA key generation: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate request: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate signing: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m CA key file: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m CA certificate file: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m FD key file: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m FD certificate file: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Private key permissions: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate permissions: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate ownership: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing configuration validation...
+[0;32m[PASS][0m Configuration test: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Config file specification: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Service script validation: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Validation error handling: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Final validation error: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Validation error message: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Validation exit code: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing backup location configuration...
+[0;32m[PASS][0m Backup locations variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Comma separator parsing: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Location array parsing: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m ACL setting: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Bareos user ACL: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Directory existence check: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing logging configuration...
+[0;32m[PASS][0m Log directory: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log directory creation: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log directory ownership: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log rotation config: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Rotation frequency: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Rotation count: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log compression: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Post-rotation script: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log file permissions: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing configuration defaults and fallbacks...
+[0;32m[PASS][0m Configuration defaults: bareos_director_host:-bareos-dir found
+[0;32m[PASS][0m Configuration defaults: fd_name:-.*hostname.*-fd found
+[0;32m[PASS][0m Configuration defaults: fd_password:-changeme found
+[0;32m[PASS][0m Configuration defaults: fd_port:-9102 found
+[0;32m[PASS][0m Configuration defaults: backup_locations:-/volume1 found
+[0;32m[PASS][0m Configuration defaults: enable_ssl:-true found
+[0;32m[PASS][0m Configuration defaults: enable_compression:-true found
+[0;32m[PASS][0m Configuration defaults: enable_autostart:-true found
+[0;34m[INFO][0m Testing configuration file syntax...
+[0;32m[PASS][0m Config syntax: Generated config has proper block structure
+[0;34m[INFO][0m Testing plugin directory configuration...
+[0;32m[PASS][0m Plugin directory directive: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Plugin directory path: Pattern found in /home/jparks/synology-bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Generated plugin directory: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Plugin directory exists: Directory exists - /home/jparks/synology-bareos-fd/target/lib/bareos
+[0;32m[PASS][0m Plugin documentation: File exists - /home/jparks/synology-bareos-fd/target/lib/bareos/README-BINARIES.txt
+[0;34m[INFO][0m Testing working directory configuration...
+[0;32m[PASS][0m Working directory variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Working directory path: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Working directory creation: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Working directory ownership: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+[0;32m[PASS][0m Working directory permissions: Pattern found in /home/jparks/synology-bareos-fd/scripts/postinst
+
+============================================
+Configuration Test Results:
+============================================
+Total Tests: 89
+Passed: 89
+Failed: 0
+✓ All configuration tests passed!

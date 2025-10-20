@@ -91,6 +91,13 @@ Client {
 }
 EOF
 
+# Validate generated configuration
+log_info "Validating configuration..."
+if ! "$BAREOS_HOME/bin/bareos-fd" -t -c "$BAREOS_CONFIG_DIR/bareos-fd.conf" >/dev/null 2>&1; then
+    log_error "Configuration validation failed"
+    exit 1
+fi
+
 # Generate director configuration for each backup location
 IFS=',' read -ra LOCATIONS <<< "${backup_locations:-/volume1}"
 for location in "${LOCATIONS[@]}"; do

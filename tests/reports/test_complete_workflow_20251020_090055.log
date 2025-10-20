@@ -1,0 +1,48 @@
+==================================================
+Bareos FD SPK - Integration Tests
+==================================================
+
+[0;34m[INFO][0m Setting up integration test environment...
+[0;34m[INFO][0m Testing complete SPK build process...
+[0;32m[PASS][0m SPK build: Build script executed successfully
+[0;32m[PASS][0m SPK build: SPK file created (bareos-fd-23.0.0-1-noarch.spk)
+[0;32m[PASS][0m SPK build: SPK file has correct structure
+[0;32m[PASS][0m SPK build: SPK file size is reasonable (40960 bytes)
+[0;34m[INFO][0m Testing SPK package content validation...
+[0;32m[PASS][0m SPK content: SPK file extracts successfully
+[0;32m[PASS][0m SPK content: Required archives present
+[0;32m[PASS][0m SPK content: Scripts directory present
+[0;32m[PASS][0m SPK content: Package archive contains target directory
+[0;32m[PASS][0m SPK content: Info archive contains required files
+[0;34m[INFO][0m Testing installation workflow simulation...
+[0;32m[PASS][0m Installation workflow: Pre-install script succeeded
+[0;31m[FAIL][0m Installation workflow: Post-install script failed
+[0;31m[FAIL][0m Installation workflow: Configuration file not generated
+[0;34m[INFO][0m Testing service lifecycle simulation...
+[0;31m[FAIL][0m Service lifecycle: Status command failed to execute
+[0;31m[FAIL][0m Service lifecycle: Invalid command doesn't show usage
+[0;34m[INFO][0m Testing upgrade workflow simulation...
+[0;32m[PASS][0m Upgrade workflow: Pre-upgrade script succeeded
+[0;32m[PASS][0m Upgrade workflow: Configuration backup location saved
+[0;32m[PASS][0m Upgrade workflow: Post-upgrade script succeeded
+[0;34m[INFO][0m Testing uninstallation workflow simulation...
+[0;32m[PASS][0m Uninstallation workflow: Pre-uninstall script succeeded
+[0;32m[PASS][0m Uninstallation workflow: Post-uninstall script succeeded
+[0;34m[INFO][0m Testing wizard UI integration...
+[1;33m[WARN][0m Wizard integration: jq not available, skipping JSON validation
+[0;32m[PASS][0m Wizard integration: All required fields present in UI
+[0;34m[INFO][0m Testing security integration...
+[0;31m[FAIL][0m Security integration: User creation script missing
+[0;31m[FAIL][0m Security integration: File permission setting missing
+[0;32m[PASS][0m Security integration: SSL certificate generation present
+[0;34m[INFO][0m Testing error handling and recovery...
+[0;31m[FAIL][0m Error handling: Some scripts missing error handling (2/6)
+[0;34m[INFO][0m Cleaning up integration test environment...
+
+==================================================
+Integration Test Results:
+==================================================
+Total Tests: 25
+Passed: 17
+Failed: 7
+✗ Some integration tests failed!

@@ -1,0 +1,52 @@
+==============================================
+Bareos FD SPK - Service Management Tests
+==============================================
+
+[0;34m[INFO][0m Testing service script structure...
+[0;32m[PASS][0m Service management script: File exists - /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Service script executable: File is executable - /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos user variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos home variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos binary variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos config variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m PID file variable: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Command case statement: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Start command: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Stop command: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Status command: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Reload command: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing start functionality...
+[0;32m[PASS][0m Start message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Running check: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Already running check: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Directory creation: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Ownership setting: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Configuration validation: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Config validation error: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m User switching: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Debug level setting: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Startup wait: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Startup result messages: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing stop functionality...
+[0;32m[PASS][0m Stop message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m PID file reading: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Graceful shutdown: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Force kill: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m PID file cleanup: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Shutdown timeout: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Shutdown wait loop: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Stop result messages: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing status functionality...
+[0;32m[PASS][0m Status case: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Running status message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Not running message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Status success exit code: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Status failure exit code: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing reload functionality...
+[0;32m[PASS][0m Reload case: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Reload message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m HUP signal: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Reload success message: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Reload error handling: Pattern found in /home/jparks/synology-bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing error handling...
+[0;31m[FAIL][0m Info logging function: Pattern 'log_info' not found in /home/jparks/synology-bareos-fd/scripts/start-stop-status

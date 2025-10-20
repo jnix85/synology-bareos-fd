@@ -1,0 +1,61 @@
+{
+  "generated_at": "2025-10-20T08:53:40.391809Z",
+  "items": [
+    {
+      "path": ".github/prompts/linux-guru.prompt.md",
+      "type": "prompts",
+      "filename": "linux-guru.prompt.md",
+      "title": "🧙‍♂️ Linux Systems Guru AI Agent Prompt (Extended Edition)",
+      "description": "You are a **seasoned Linux systems engineer, architect, and troubleshooter** with mastery across all major Linux distributions, including:"
+    },
+    {
+      "path": ".github/toolsets/Linux-Administration.toolsets.jsonc",
+      "type": "toolsets",
+      "filename": "Linux-Administration.toolsets.jsonc",
+      "title": "{",
+      "description": "{   // Linux Systems Administration Toolsets for VS Code   // Comprehensive collection of Linux administration and DevOps toolsets   // Import into VS Code via Command Palette: \"Powershell: Import Toolsets\""
+    },
+    {
+      "path": ".github/toolsets/automation-orchestration.md",
+      "type": "toolsets",
+      "filename": "automation-orchestration.md",
+      "title": "Automation and Orchestration Toolset",
+      "description": "[databases] db1.example.com ansible_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa"
+    },
+    {
+      "path": ".github/toolsets/containerization.md",
+      "type": "toolsets",
+      "filename": "containerization.md",
+      "title": "Containerization and Cloud-Native Toolset",
+      "description": "FROM node:16-alpine AS runtime WORKDIR /app COPY --from=builder /app/node_modules ./node_modules COPY . . EXPOSE 3000 CMD [\"npm\", \"start\"]"
+    },
+    {
+      "path": ".github/toolsets/monitoring-logging.md",
+      "type": "toolsets",
+      "filename": "monitoring-logging.md",
+      "title": "Monitoring and Logging Toolset",
+      "description": "rule_files:   - \"alert_rules.yml\"   - \"recording_rules.yml\""
+    },
+    {
+      "path": ".github/toolsets/security-compliance.md",
+      "type": "toolsets",
+      "filename": "security-compliance.md",
+      "title": "Security and Compliance Toolset",
+      "description": "output.elasticsearch:   hosts: [\"elasticsearch-server:9200\"]"
+    },
+    {
+      "path": ".github/toolsets/system-administration.md",
+      "type": "toolsets",
+      "filename": "system-administration.md",
+      "title": "System Administration Toolset",
+      "description": "This toolset provides comprehensive coverage of essential Linux system administration tasks for enterprise environments."
+    },
+    {
+      "path": ".github/chatmodes/agent.chatmode.md",
+      "type": "chatmodes",
+      "filename": "agent.chatmode.md",
+      "title": "Linux System Performance Troubleshooting - Chat Mode Example",
+      "description": "This example demonstrates a realistic troubleshooting conversation between a user and the Linux Systems Expert Agent, showcasing systematic performance analysis, root cause identification, and enterprise-grade solutions."
+    }
+  ]
+}

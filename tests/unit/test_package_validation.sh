@@ -89,7 +89,7 @@ assert_contains() {
     local description="$3"
     TEST_COUNT=$((TEST_COUNT + 1))
     
-    if grep -q "$pattern" "$file" 2>/dev/null; then
+    if grep -q -- "$pattern" "$file" 2>/dev/null; then
         log_success "$description: Pattern found in $file"
         return 0
     else
