@@ -45,7 +45,7 @@ jobs:
         ./run_tests.sh unit
         
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: validation-test-results
@@ -93,14 +93,14 @@ jobs:
         ./run_tests.sh integration
         
     - name: Upload SPK package
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: spk-package
         path: "*.spk"
         retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
         
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: build-test-results
@@ -157,7 +157,7 @@ jobs:
         fi
         
     - name: Upload test reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-reports
@@ -209,12 +209,12 @@ jobs:
     
     steps:
     - name: Download SPK package
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: spk-package
         
     - name: Download test reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: test-reports
         path: test-reports/
