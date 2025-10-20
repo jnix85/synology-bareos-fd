@@ -1,0 +1,18 @@
+{
+    "defaults": {
+        "run-as": "bareos"
+    },
+    "username": "bareos",
+    "ctrl-privilege": {
+        "disable-check": false
+    },
+    "usr-privilege": [
+        {
+            "username": "bareos",
+            "description": "Bareos File Daemon service user"
+        }
+    ],
+    "join-privilege": {
+        "usr-local-group": ["users"]
+    }
+}

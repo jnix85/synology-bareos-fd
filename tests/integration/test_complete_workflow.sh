@@ -6,13 +6,14 @@
 set -euo pipefail
 
 # Source test framework
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 source "$TEST_DIR/../unit/test_package_validation.sh" 2>/dev/null || {
     # If sourcing fails, define minimal framework
     log_info() { echo "[INFO] $1"; }
-    log_success() { echo "[PASS] $1"; ((PASSED_COUNT++)); }
-    log_error() { echo "[FAIL] $1"; ((FAILED_COUNT++)); }
+    log_success() { echo "[PASS] $1"; PASSED_COUNT=$((PASSED_COUNT + 1)); }
+    log_error() { echo "[FAIL] $1"; FAILED_COUNT=$((FAILED_COUNT + 1)); }
     log_warning() { echo "[WARN] $1"; }
     TEST_COUNT=0; PASSED_COUNT=0; FAILED_COUNT=0
 }
@@ -47,7 +48,7 @@ test_spk_build_process() {
     cd "$BUILD_TEST_DIR"
     
     # Test build script execution
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if timeout 60 bash build_spk.sh >/dev/null 2>&1; then
         log_success "SPK build: Build script executed successfully"
     else
@@ -56,7 +57,7 @@ test_spk_build_process() {
     fi
     
     # Test SPK file creation
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local spk_file=$(ls *.spk 2>/dev/null | head -1)
     if [[ -f "$spk_file" ]]; then
         log_success "SPK build: SPK file created ($spk_file)"
@@ -66,7 +67,7 @@ test_spk_build_process() {
     fi
     
     # Test SPK file structure
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if tar -tf "$spk_file" | grep -q "package.tgz\|INFO.tgz\|scripts"; then
         log_success "SPK build: SPK file has correct structure"
     else
@@ -75,7 +76,7 @@ test_spk_build_process() {
     fi
     
     # Test SPK file size (should be reasonable)
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local size=$(stat -f%z "$spk_file" 2>/dev/null || stat -c%s "$spk_file" 2>/dev/null)
     if [[ $size -gt 1024 && $size -lt 10485760 ]]; then  # Between 1KB and 10MB
         log_success "SPK build: SPK file size is reasonable ($size bytes)"
@@ -102,7 +103,7 @@ test_spk_content_validation() {
     local extract_dir="$BUILD_TEST_DIR/extracted"
     mkdir -p "$extract_dir"
     
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if tar -xf "$spk_file" -C "$extract_dir" 2>/dev/null; then
         log_success "SPK content: SPK file extracts successfully"
     else
@@ -111,7 +112,7 @@ test_spk_content_validation() {
     fi
     
     # Test required archives exist
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if [[ -f "$extract_dir/package.tgz" && -f "$extract_dir/INFO.tgz" ]]; then
         log_success "SPK content: Required archives present"
     else
@@ -120,7 +121,7 @@ test_spk_content_validation() {
     fi
     
     # Test scripts directory
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if [[ -d "$extract_dir/scripts" ]]; then
         log_success "SPK content: Scripts directory present"
     else
@@ -129,7 +130,7 @@ test_spk_content_validation() {
     fi
     
     # Test package.tgz content
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if tar -tzf "$extract_dir/package.tgz" | grep -q "target/"; then
         log_success "SPK content: Package archive contains target directory"
     else
@@ -138,7 +139,7 @@ test_spk_content_validation() {
     fi
     
     # Test INFO.tgz content
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if tar -tzf "$extract_dir/INFO.tgz" | grep -q "INFO\|WIZARD_UIFILES"; then
         log_success "SPK content: Info archive contains required files"
     else
@@ -198,7 +199,7 @@ EOF
     env | grep -E "^(bareos_|fd_|enable_|backup_)" > "$mock_root/tmp/bareos_install_vars"
     
     # Test pre-installation script
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     cd "$mock_root"
     local preinst="$package_dir/scripts/preinst"
     if timeout 30 bash "$preinst" >/dev/null 2>&1; then
@@ -208,7 +209,7 @@ EOF
     fi
     
     # Test post-installation script (with mocked commands)
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local postinst="$package_dir/scripts/postinst"
     # Create mock commands that could be called
     cat > "$mock_root/openssl" << 'EOF'
@@ -231,13 +232,13 @@ EOF
     fi
     
     # Test configuration file generation
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local config_file="$package_dir/target/etc/bareos/bareos-fd.conf"
     if [[ -f "$config_file" ]]; then
         log_success "Installation workflow: Configuration file generated"
         
         # Test configuration content
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if grep -q "test-director\|test-fd\|test-password" "$config_file"; then
             log_success "Installation workflow: Configuration contains wizard values"
         else
@@ -282,7 +283,7 @@ EOF
     cd "$mock_root"
     
     # Test service status when not running
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if timeout 10 bash "$service_script" status >/dev/null 2>&1; then
         # Status should return non-zero when not running, but script should execute
         log_success "Service lifecycle: Status command executes (daemon not running)"
@@ -291,7 +292,7 @@ EOF
     fi
     
     # Test invalid command handling
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if bash "$service_script" invalid_command 2>&1 | grep -q "Usage:"; then
         log_success "Service lifecycle: Invalid command shows usage"
     else
@@ -313,7 +314,7 @@ test_upgrade_workflow() {
     export backup_config="true"
     
     # Test pre-upgrade script
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local preupgrade="$package_dir/scripts/preupgrade"
     if timeout 30 bash "$preupgrade" >/dev/null 2>&1; then
         log_success "Upgrade workflow: Pre-upgrade script succeeded"
@@ -322,7 +323,7 @@ test_upgrade_workflow() {
     fi
     
     # Test that configuration backup was created
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if [[ -f "/tmp/bareos_config_backup_location" ]]; then
         log_success "Upgrade workflow: Configuration backup location saved"
     else
@@ -330,7 +331,7 @@ test_upgrade_workflow() {
     fi
     
     # Test post-upgrade script
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local postupgrade="$package_dir/scripts/postupgrade"
     if timeout 30 bash "$postupgrade" >/dev/null 2>&1; then
         log_success "Upgrade workflow: Post-upgrade script succeeded"
@@ -351,7 +352,7 @@ test_uninstallation_workflow() {
     cd "$mock_root"
     
     # Test pre-uninstall script
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local preuninst="$package_dir/scripts/preuninst"
     if timeout 30 bash "$preuninst" >/dev/null 2>&1; then
         log_success "Uninstallation workflow: Pre-uninstall script succeeded"
@@ -360,7 +361,7 @@ test_uninstallation_workflow() {
     fi
     
     # Test post-uninstall script
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local postuninst="$package_dir/scripts/postuninst"
     if timeout 30 bash "$postuninst" >/dev/null 2>&1; then
         log_success "Uninstallation workflow: Post-uninstall script succeeded"
@@ -379,7 +380,7 @@ test_wizard_integration() {
     local install_ui="$PROJECT_ROOT/WIZARD_UIFILES/install_uifile"
     local upgrade_ui="$PROJECT_ROOT/WIZARD_UIFILES/upgrade_uifile"
     
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if command -v jq >/dev/null 2>&1; then
         if jq empty "$install_ui" >/dev/null 2>&1 && jq empty "$upgrade_ui" >/dev/null 2>&1; then
             log_success "Wizard integration: UI files are valid JSON"
@@ -391,7 +392,7 @@ test_wizard_integration() {
     fi
     
     # Test wizard field extraction
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local required_fields=(
         "bareos_director_host"
         "fd_name"
@@ -428,7 +429,7 @@ test_security_integration() {
     local package_dir="$mock_root/var/packages/bareos-fd"
     
     # Test user creation and permissions
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if grep -q "synouser.*add.*bareos" "$package_dir/scripts/postinst"; then
         log_success "Security integration: User creation script present"
     else
@@ -436,7 +437,7 @@ test_security_integration() {
     fi
     
     # Test file permissions in postinst
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if grep -q "chmod.*chown" "$package_dir/scripts/postinst"; then
         log_success "Security integration: File permission setting present"
     else
@@ -444,7 +445,7 @@ test_security_integration() {
     fi
     
     # Test SSL certificate generation
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if grep -q "openssl.*bareos-fd.key\|bareos-fd.pem" "$package_dir/scripts/postinst"; then
         log_success "Security integration: SSL certificate generation present"
     else
@@ -471,11 +472,11 @@ test_error_handling_integration() {
         "scripts/postuninst"
     )
     
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local error_handling_count=0
     for script in "${scripts[@]}"; do
         if grep -q "log_error\|exit 1" "$package_dir/$script"; then
-            ((error_handling_count++))
+            error_handling_count=$((error_handling_count + 1))
         fi
     done
     

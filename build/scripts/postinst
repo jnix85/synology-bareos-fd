@@ -1,0 +1,246 @@
+#!/bin/bash
+
+# Post-installation script for Bareos File Daemon
+
+BAREOS_HOME="/var/packages/bareos-fd/target"
+BAREOS_USER="bareos"
+BAREOS_CONFIG_DIR="$BAREOS_HOME/etc/bareos"
+BAREOS_WORK_DIR="/var/lib/bareos"
+
+# Source installation variables
+source /tmp/bareos_install_vars 2>/dev/null || true
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-install.log
+}
+
+log_error() {
+    echo "[ERROR] $1" | tee -a /var/log/bareos-install.log >&2
+}
+
+# Create bareos user if it doesn't exist
+if ! id "$BAREOS_USER" >/dev/null 2>&1; then
+    log_info "Creating bareos user..."
+    /usr/syno/sbin/synouser --add "$BAREOS_USER" "" "Bareos Service User" 0 "" 0
+    /usr/syno/sbin/synogroup --member users "$BAREOS_USER"
+fi
+
+# Create necessary directories
+log_info "Creating Bareos directories..."
+mkdir -p "$BAREOS_WORK_DIR" "$BAREOS_CONFIG_DIR" /var/log/bareos /var/run/bareos
+
+# Set proper permissions
+chown -R "$BAREOS_USER:users" "$BAREOS_WORK_DIR" "$BAREOS_CONFIG_DIR" /var/log/bareos /var/run/bareos
+chmod 750 "$BAREOS_WORK_DIR" "$BAREOS_CONFIG_DIR"
+chmod 755 /var/log/bareos /var/run/bareos
+
+# Generate bareos-fd.conf from wizard input
+log_info "Generating Bareos File Daemon configuration..."
+cat > "$BAREOS_CONFIG_DIR/bareos-fd.conf" << EOF
+#
+# Bareos File Daemon Configuration
+# Generated during installation on $(date)
+#
+
+Director {
+  Name = ${bareos_director_host:-bareos-dir}-dir
+  Password = "${fd_password:-changeme}"
+}
+
+FileDaemon {
+  Name = ${fd_name:-$(hostname)-fd}
+  FDport = ${fd_port:-9102}
+  WorkingDirectory = ${BAREOS_WORK_DIR}
+  Pid Directory = /var/run/bareos
+  Plugin Directory = ${BAREOS_HOME}/lib/bareos/plugins
+  Maximum Concurrent Jobs = 20
+  
+  # TLS Configuration
+  $(if [ "${enable_ssl:-true}" = "true" ]; then
+    echo "  TLS Enable = yes"
+    echo "  TLS Require = no"
+    echo "  TLS Certificate = $BAREOS_CONFIG_DIR/bareos-fd.pem"
+    echo "  TLS Key = $BAREOS_CONFIG_DIR/bareos-fd.key"
+    echo "  TLS CA Certificate File = $BAREOS_CONFIG_DIR/bareos-ca.pem"
+  fi)
+}
+
+Messages {
+  Name = Standard
+  director = ${bareos_director_host:-bareos-dir}-dir = all, !skipped, !restored
+  File = /var/log/bareos/bareos-fd.log = all, !skipped
+}
+
+# Include additional configuration files
+@|"find ${BAREOS_CONFIG_DIR}/bareos-fd.d -name '*.conf' -type f -exec echo @{} \;"
+EOF
+
+# Create configuration directory structure
+mkdir -p "$BAREOS_CONFIG_DIR/bareos-fd.d"/{client,director,messages}
+
+# Generate client configuration
+cat > "$BAREOS_CONFIG_DIR/bareos-fd.d/client/myself.conf" << EOF
+Client {
+  Name = ${fd_name:-$(hostname)-fd}
+  Maximum Concurrent Jobs = 20
+  
+  # Compression settings
+  $(if [ "${enable_compression:-true}" = "true" ]; then
+    echo "  compression = GZIP"
+  fi)
+}
+EOF
+
+# Generate director configuration for each backup location
+IFS=',' read -ra LOCATIONS <<< "${backup_locations:-/volume1}"
+for location in "${LOCATIONS[@]}"; do
+    location=$(echo "$location" | xargs) # trim whitespace
+    if [ -d "$location" ]; then
+        log_info "Configuring backup for $location"
+        # Ensure bareos user has read access
+        setfacl -m u:bareos:r-x "$location" 2>/dev/null || true
+    fi
+done
+
+# Generate SSL certificates if enabled
+if [ "${enable_ssl:-true}" = "true" ]; then
+    log_info "Generating SSL certificates..."
+    cd "$BAREOS_CONFIG_DIR"
+    
+    # Generate CA key and certificate
+    openssl genrsa -out bareos-ca.key 4096 2>/dev/null
+    openssl req -new -x509 -days 3650 -key bareos-ca.key -out bareos-ca.pem \
+        -subj "/C=US/ST=CA/L=Local/O=Bareos/OU=CA/CN=Bareos-CA" 2>/dev/null
+    
+    # Generate File Daemon key and certificate
+    openssl genrsa -out bareos-fd.key 4096 2>/dev/null
+    openssl req -new -key bareos-fd.key -out bareos-fd.csr \
+        -subj "/C=US/ST=CA/L=Local/O=Bareos/OU=FileDaemon/CN=${fd_name:-$(hostname)-fd}" 2>/dev/null
+    openssl x509 -req -days 3650 -in bareos-fd.csr -CA bareos-ca.pem -CAkey bareos-ca.key \
+        -CAcreateserial -out bareos-fd.pem 2>/dev/null
+    
+    # Set proper permissions
+    chmod 600 *.key
+    chmod 644 *.pem *.csr
+    chown "$BAREOS_USER:users" *.key *.pem *.csr
+    
+    rm bareos-fd.csr
+fi
+
+# Create systemd-style service file for DSM
+log_info "Creating service configuration..."
+mkdir -p /usr/local/etc/rc.d
+cat > /usr/local/etc/rc.d/bareos-fd.sh << 'EOF'
+#!/bin/bash
+
+case "$1" in
+    start)
+        /var/packages/bareos-fd/scripts/start-stop-status start
+        ;;
+    stop)
+        /var/packages/bareos-fd/scripts/start-stop-status stop
+        ;;
+    restart)
+        /var/packages/bareos-fd/scripts/start-stop-status stop
+        sleep 2
+        /var/packages/bareos-fd/scripts/start-stop-status start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+EOF
+
+chmod +x /usr/local/etc/rc.d/bareos-fd.sh
+
+# Add to DSM services if autostart is enabled
+if [ "${enable_autostart:-true}" = "true" ]; then
+    log_info "Enabling autostart..."
+    # Add to DSM startup
+    echo "/var/packages/bareos-fd/scripts/start-stop-status start" >> /usr/local/etc/rc.local 2>/dev/null || true
+fi
+
+# Configure logrotate
+log_info "Setting up log rotation..."
+cat > /etc/logrotate.d/bareos-fd << EOF
+/var/log/bareos/bareos-fd.log {
+    weekly
+    missingok
+    rotate 4
+    compress
+    notifempty
+    create 644 bareos users
+    postrotate
+        /var/packages/bareos-fd/scripts/start-stop-status reload > /dev/null 2>&1 || true
+    endscript
+}
+EOF
+
+# Create backup verification script
+log_info "Creating backup verification tools..."
+cat > "$BAREOS_HOME/bin/bareos-verify" << 'EOF'
+#!/bin/bash
+# Bareos File Daemon verification script
+
+BAREOS_CONFIG="/var/packages/bareos-fd/target/etc/bareos/bareos-fd.conf"
+BAREOS_BIN="/var/packages/bareos-fd/target/bin/bareos-fd"
+
+echo "=== Bareos File Daemon Status Check ==="
+echo
+
+# Check if daemon is running
+if pgrep -f bareos-fd >/dev/null; then
+    echo "✓ Bareos File Daemon is running"
+    echo "  PID: $(pgrep -f bareos-fd)"
+else
+    echo "✗ Bareos File Daemon is not running"
+fi
+
+# Check configuration
+echo
+echo "=== Configuration Check ==="
+if "$BAREOS_BIN" -t -c "$BAREOS_CONFIG" 2>&1; then
+    echo "✓ Configuration is valid"
+else
+    echo "✗ Configuration has errors"
+fi
+
+# Check connectivity
+echo
+echo "=== Network Connectivity ==="
+FD_PORT=$(grep -E "^\s*FDport\s*=" "$BAREOS_CONFIG" | cut -d= -f2 | tr -d ' ')
+if netstat -ln | grep ":${FD_PORT:-9102}" >/dev/null; then
+    echo "✓ File Daemon is listening on port ${FD_PORT:-9102}"
+else
+    echo "✗ File Daemon is not listening on port ${FD_PORT:-9102}"
+fi
+
+# Check recent activity
+echo
+echo "=== Recent Activity ==="
+if [ -f /var/log/bareos/bareos-fd.log ]; then
+    echo "Recent log entries:"
+    tail -5 /var/log/bareos/bareos-fd.log
+else
+    echo "No log file found"
+fi
+EOF
+
+chmod +x "$BAREOS_HOME/bin/bareos-verify"
+
+# Final validation
+log_info "Validating installation..."
+if "$BAREOS_HOME/bin/bareos-fd" -t -c "$BAREOS_CONFIG_DIR/bareos-fd.conf"; then
+    log_info "Bareos File Daemon installed successfully!"
+    log_info "Configuration file: $BAREOS_CONFIG_DIR/bareos-fd.conf"
+    log_info "Use 'bareos-verify' command to check status"
+    
+    # Clean up temporary files
+    rm -f /tmp/bareos_install_vars
+    
+    exit 0
+else
+    log_error "Configuration validation failed!"
+    exit 1
+fi

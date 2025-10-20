@@ -1,0 +1,7 @@
+{
+    "cpu-usage": "low",
+    "memory-usage": "low",
+    "disk-usage": "low",
+    "network-usage": "low",
+    "temp-space": "50M"
+}

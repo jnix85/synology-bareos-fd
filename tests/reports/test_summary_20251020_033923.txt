@@ -1,0 +1,15 @@
+Bareos File Daemon SPK - Test Summary
+Generated: Mon Oct 20 03:39:28 CDT 2025
+
+OVERALL RESULTS:
+Total Tests: 76
+Passed: 76
+Failed: 0
+Success Rate: 100.0%
+
+SUITE RESULTS:
+test_package_validation        PASS (P: F: 0s)
+test_installation_scripts      PASS (P:76 F:0 1s)
+test_service_management        FAIL (P:0 F:0 0s)
+test_configuration             FAIL (P:0 F:0 1s)
+test_complete_workflow         FAIL (P:0 F:0 2s)

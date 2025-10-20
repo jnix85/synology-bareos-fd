@@ -6,13 +6,14 @@
 set -euo pipefail
 
 # Source test framework
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 source "$TEST_DIR/test_package_validation.sh" 2>/dev/null || {
     # If sourcing fails, define minimal framework
     log_info() { echo "[INFO] $1"; }
-    log_success() { echo "[PASS] $1"; ((PASSED_COUNT++)); }
-    log_error() { echo "[FAIL] $1"; ((FAILED_COUNT++)); }
+    log_success() { echo "[PASS] $1"; PASSED_COUNT=$((PASSED_COUNT + 1)); }
+    log_error() { echo "[FAIL] $1"; FAILED_COUNT=$((FAILED_COUNT + 1)); }
     TEST_COUNT=0; PASSED_COUNT=0; FAILED_COUNT=0
 }
 
@@ -134,10 +135,10 @@ test_argument_handling() {
         assert_contains "$SERVICE_SCRIPT" "\$0 start" "Restart start call"
         assert_contains "$SERVICE_SCRIPT" "sleep 2" "Restart delay"
         log_success "Restart functionality: Present in service script"
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
     else
         log_error "Restart functionality: Missing from service script"
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
     fi
 }
 
@@ -155,7 +156,7 @@ test_file_paths() {
     )
     
     for path in "${expected_paths[@]}"; do
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if grep -q "$path" "$SERVICE_SCRIPT"; then
             log_success "File paths: $path found in service script"
         else
@@ -192,10 +193,10 @@ test_compatibility() {
     # Test fallback mechanisms
     if grep -q "command -v su" "$SERVICE_SCRIPT"; then
         log_success "Compatibility: Has fallback for su command"
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
     else
         log_error "Compatibility: Missing fallback for su command"
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
     fi
     
     # Test signal handling compatibility
@@ -225,7 +226,7 @@ test_service_script_execution() {
     log_info "Testing service script execution scenarios..."
     
     # Test syntax validation
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if bash -n "$SERVICE_SCRIPT" 2>/dev/null; then
         log_success "Service script syntax: Valid bash syntax"
     else
@@ -233,7 +234,7 @@ test_service_script_execution() {
     fi
     
     # Test with invalid arguments
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local output
     if output=$(timeout 5 bash "$SERVICE_SCRIPT" invalid_command 2>&1); then
         if echo "$output" | grep -q "Usage:"; then
@@ -246,7 +247,7 @@ test_service_script_execution() {
     fi
     
     # Test status command (should be safe to run)
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if timeout 5 bash "$SERVICE_SCRIPT" status >/dev/null 2>&1; then
         log_success "Service script execution: Status command executes without error"
     else

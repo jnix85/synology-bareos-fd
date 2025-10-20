@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Pre-installation script for Bareos File Daemon
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-install.log
+}
+
+log_error() {
+    echo "[ERROR] $1" | tee -a /var/log/bareos-install.log >&2
+}
+
+# Check system requirements
+log_info "Checking system requirements..."
+
+# Check DSM version
+DSM_VERSION=$(get_key_value /etc/VERSION buildnumber)
+if [ "$DSM_VERSION" -lt 40000 ]; then
+    log_error "DSM 7.0 or higher is required"
+    exit 1
+fi
+
+# Check available space
+AVAILABLE_SPACE=$(df /var | awk 'NR==2 {print $4}')
+REQUIRED_SPACE=102400  # 100MB in KB
+
+if [ "$AVAILABLE_SPACE" -lt "$REQUIRED_SPACE" ]; then
+    log_error "Insufficient disk space. Required: 100MB, Available: $((AVAILABLE_SPACE/1024))MB"
+    exit 1
+fi
+
+# Check if another backup client is running
+if pgrep -f "bacula-fd\|duplicity\|restic" >/dev/null; then
+    log_info "Warning: Other backup clients detected. Consider stopping them to avoid conflicts."
+fi
+
+# Save wizard variables for postinst
+env | grep -E "^(bareos_|fd_|enable_|backup_)" > /tmp/bareos_install_vars
+
+log_info "Pre-installation checks completed successfully"
+exit 0

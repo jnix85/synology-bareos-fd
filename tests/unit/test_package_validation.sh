@@ -13,8 +13,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Test configuration
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$TEST_DIR")"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 TEMP_DIR="/tmp/bareos-spk-tests-$$"
 TEST_COUNT=0
 PASSED_COUNT=0
@@ -27,12 +28,12 @@ log_info() {
 
 log_success() {
     echo -e "${GREEN}[PASS]${NC} $1"
-    ((PASSED_COUNT++))
+    PASSED_COUNT=$((PASSED_COUNT + 1))
 }
 
 log_error() {
     echo -e "${RED}[FAIL]${NC} $1"
-    ((FAILED_COUNT++))
+    FAILED_COUNT=$((FAILED_COUNT + 1))
 }
 
 log_warning() {
@@ -43,7 +44,7 @@ log_warning() {
 assert_file_exists() {
     local file="$1"
     local description="$2"
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     
     if [[ -f "$file" ]]; then
         log_success "$description: File exists - $file"
@@ -57,7 +58,7 @@ assert_file_exists() {
 assert_dir_exists() {
     local dir="$1"
     local description="$2"
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     
     if [[ -d "$dir" ]]; then
         log_success "$description: Directory exists - $dir"
@@ -71,7 +72,7 @@ assert_dir_exists() {
 assert_executable() {
     local file="$1"
     local description="$2"
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     
     if [[ -x "$file" ]]; then
         log_success "$description: File is executable - $file"
@@ -86,7 +87,7 @@ assert_contains() {
     local file="$1"
     local pattern="$2"
     local description="$3"
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     
     if grep -q "$pattern" "$file" 2>/dev/null; then
         log_success "$description: Pattern found in $file"
@@ -100,7 +101,7 @@ assert_contains() {
 assert_json_valid() {
     local file="$1"
     local description="$2"
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     
     if command -v jq >/dev/null 2>&1; then
         if jq empty "$file" >/dev/null 2>&1; then
@@ -252,7 +253,7 @@ test_script_syntax() {
     )
     
     for script in "${scripts[@]}"; do
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if bash -n "$PROJECT_ROOT/$script" 2>/dev/null; then
             log_success "Script syntax: $script is valid"
         else
@@ -324,7 +325,7 @@ test_build_script() {
     assert_contains "$build_script" "chmod +x" "Permission setting"
     
     # Test build script can parse successfully
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if grep -q "set -euo pipefail" "$build_script"; then
         log_success "Build script: Uses strict error handling"
     else

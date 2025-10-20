@@ -1,0 +1,84 @@
+[{
+    "step_title": "Bareos File Daemon Configuration",
+    "items": [{
+        "type": "textfield",
+        "desc": "Bareos Director Hostname/IP",
+        "subitems": [{
+            "key": "bareos_director_host",
+            "desc": "Director Address",
+            "defaultValue": "bareos-dir.local",
+            "validator": {
+                "allowBlank": false,
+                "regex": {
+                    "expr": "^[a-zA-Z0-9.-]+$",
+                    "errorText": "Please enter a valid hostname or IP address"
+                }
+            }
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "File Daemon Name",
+        "subitems": [{
+            "key": "fd_name",
+            "desc": "Client Name",
+            "defaultValue": "${HOSTNAME}-fd",
+            "validator": {
+                "allowBlank": false,
+                "maxLength": 127
+            }
+        }]
+    }, {
+        "type": "password",
+        "desc": "File Daemon Password",
+        "subitems": [{
+            "key": "fd_password",
+            "desc": "Password for authentication",
+            "validator": {
+                "allowBlank": false,
+                "minLength": 8
+            }
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "Network Configuration",
+        "subitems": [{
+            "key": "fd_port",
+            "desc": "File Daemon Port",
+            "defaultValue": "9102",
+            "validator": {
+                "allowBlank": false,
+                "regex": {
+                    "expr": "^[1-9][0-9]{3,4}$",
+                    "errorText": "Please enter a valid port number (1024-65535)"
+                }
+            }
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "Backup Configuration",
+        "subitems": [{
+            "key": "backup_locations",
+            "desc": "Backup Locations (comma-separated)",
+            "defaultValue": "/volume1,/volume2",
+            "validator": {
+                "allowBlank": false
+            }
+        }]
+    }, {
+        "type": "multiselect",
+        "desc": "Advanced Options",
+        "subitems": [{
+            "key": "enable_ssl",
+            "desc": "Enable SSL/TLS encryption",
+            "defaultValue": true
+        }, {
+            "key": "enable_compression",
+            "desc": "Enable compression",
+            "defaultValue": true
+        }, {
+            "key": "enable_autostart",
+            "desc": "Start automatically on boot",
+            "defaultValue": true
+        }]
+    }]
+}]

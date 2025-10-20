@@ -1,0 +1,110 @@
+===========================================
+Bareos File Daemon SPK - Unit Test Suite
+===========================================
+
+[0;34m[INFO][0m Setting up test environment...
+[0;34m[INFO][0m Testing package structure...
+[0;32m[PASS][0m Package metadata: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Package documentation: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/README.md
+[0;32m[PASS][0m Installation guide: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/INSTALL.md
+[0;32m[PASS][0m Build script: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;32m[PASS][0m Wizard UI directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES
+[0;32m[PASS][0m Configuration directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/conf
+[0;32m[PASS][0m Scripts directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts
+[0;32m[PASS][0m Target directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/target
+[0;32m[PASS][0m Install wizard UI: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Upgrade wizard UI: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/upgrade_uifile
+[0;32m[PASS][0m Privilege configuration: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/conf/privilege
+[0;32m[PASS][0m Resource configuration: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/conf/resource
+[0;32m[PASS][0m Pre-install script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Post-install script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Pre-uninstall script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;32m[PASS][0m Post-uninstall script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Pre-upgrade script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preupgrade
+[0;32m[PASS][0m Post-upgrade script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postupgrade
+[0;32m[PASS][0m Target bin directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/target/bin
+[0;32m[PASS][0m Target etc directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/target/etc
+[0;32m[PASS][0m Target lib directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/target/lib
+[0;32m[PASS][0m Target share directory: Directory exists - /Users/jparks/files/src/synology/packages/bareos-fd/target/share
+[0;34m[INFO][0m Testing script permissions...
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preupgrade
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postupgrade
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/target/bin/bareos-fd
+[0;32m[PASS][0m Script permissions: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;34m[INFO][0m Testing INFO file content...
+[0;32m[PASS][0m Package name field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Version field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Display name field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Description field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Architecture field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Maintainer field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Minimum OS version: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Startable flag: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Package name is bareos-fd: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Package is startable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;32m[PASS][0m Third-party package flag: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INFO
+[0;34m[INFO][0m Testing JSON configuration files...
+[0;32m[PASS][0m Privilege configuration JSON: Valid JSON - /Users/jparks/files/src/synology/packages/bareos-fd/conf/privilege
+[0;32m[PASS][0m Resource configuration JSON: Valid JSON - /Users/jparks/files/src/synology/packages/bareos-fd/conf/resource
+[0;32m[PASS][0m Install wizard JSON: Valid JSON - /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Upgrade wizard JSON: Valid JSON - /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/upgrade_uifile
+[0;34m[INFO][0m Testing wizard UI configuration...
+[0;32m[PASS][0m Director host field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m File daemon name field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Password field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Port field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Backup locations field: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m SSL enable option: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Compression option: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;32m[PASS][0m Autostart option: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/WIZARD_UIFILES/install_uifile
+[0;34m[INFO][0m Testing script syntax...
+[0;32m[PASS][0m Script syntax: scripts/preinst is valid
+[0;32m[PASS][0m Script syntax: scripts/postinst is valid
+[0;32m[PASS][0m Script syntax: scripts/preuninst is valid
+[0;32m[PASS][0m Script syntax: scripts/postuninst is valid
+[0;32m[PASS][0m Script syntax: scripts/preupgrade is valid
+[0;32m[PASS][0m Script syntax: scripts/postupgrade is valid
+[0;32m[PASS][0m Script syntax: build_spk.sh is valid
+[0;34m[INFO][0m Testing configuration templates...
+[0;32m[PASS][0m Configuration template: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Director block: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m FileDaemon block: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Messages block: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Name directive: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Password directive: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;32m[PASS][0m Port directive: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/target/etc/bareos/bareos-fd.conf.template
+[0;34m[INFO][0m Testing documentation...
+[0;32m[PASS][0m README title: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/README.md
+[0;32m[PASS][0m Installation section: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/README.md
+[0;32m[PASS][0m Configuration section: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/README.md
+[0;32m[PASS][0m Troubleshooting section: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/README.md
+[0;32m[PASS][0m Install guide title: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INSTALL.md
+[0;32m[PASS][0m Install command: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INSTALL.md
+[0;32m[PASS][0m Package Center instructions: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/INSTALL.md
+[0;34m[INFO][0m Testing security configuration...
+[0;32m[PASS][0m Bareos user configuration: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/conf/privilege
+[0;32m[PASS][0m Run-as configuration: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/conf/privilege
+[0;32m[PASS][0m User privilege configuration: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/conf/privilege
+[0;32m[PASS][0m Permission setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Ownership setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m SSL certificate generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing build script...
+[0;32m[PASS][0m Package creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;32m[PASS][0m Info archive creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;32m[PASS][0m SPK creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;32m[PASS][0m Permission setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/build_spk.sh
+[0;32m[PASS][0m Build script: Uses strict error handling
+[0;34m[INFO][0m Cleaning up test environment...
+
+===========================================
+Test Results Summary:
+===========================================
+Total Tests: [0;34m85[0m
+Passed: [0;32m85[0m
+Failed: [0;31m0[0m
+
+[0;32m✓ All tests passed![0m

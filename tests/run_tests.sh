@@ -6,8 +6,9 @@
 set -euo pipefail
 
 # Test runner configuration
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$TEST_DIR")"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 REPORT_DIR="$TEST_DIR/reports"
 TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
 
@@ -148,7 +149,7 @@ run_unit_tests() {
     for test in "${UNIT_TESTS[@]}"; do
         local suite_name=$(basename "$test" .sh)
         if ! run_test_suite "$test" "$suite_name"; then
-            ((unit_failures++))
+            unit_failures=$((unit_failures + 1))
         fi
         echo
     done
@@ -171,7 +172,7 @@ run_integration_tests() {
     for test in "${INTEGRATION_TESTS[@]}"; do
         local suite_name=$(basename "$test" .sh)
         if ! run_test_suite "$test" "$suite_name"; then
-            ((integration_failures++))
+            integration_failures=$((integration_failures + 1))
         fi
         echo
     done
@@ -341,7 +342,7 @@ run_quality_checks() {
     while IFS= read -r -d '' script; do
         if ! bash -n "$script" 2>/dev/null; then
             log_error "Syntax error in: $script"
-            ((quality_issues++))
+            quality_issues=$((quality_issues + 1))
         fi
     done < <(find "$PROJECT_ROOT" -name "*.sh" -print0)
     
@@ -362,15 +363,28 @@ run_quality_checks() {
     log_info "Checking executable permissions..."
     local script_count=0
     local executable_count=0
+    local non_executable_scripts=()
     
     while IFS= read -r -d '' script; do
-        ((script_count++))
+        script_count=$((script_count + 1))
         if [[ -x "$script" ]]; then
-            ((executable_count++))
+            executable_count=$((executable_count + 1))
+        else
+            non_executable_scripts+=("$script")
         fi
     done < <(find "$PROJECT_ROOT" -name "*.sh" -print0)
     
     log_info "Executable scripts: $executable_count/$script_count"
+    
+    if [[ $executable_count -eq $script_count ]]; then
+        log_success "All shell scripts are executable"
+    else
+        log_error "Found non-executable scripts:"
+        for script in "${non_executable_scripts[@]}"; do
+            log_error "  - $script"
+        done
+        quality_issues=$((quality_issues + 1))
+    fi
     
     return $quality_issues
 }
@@ -391,19 +405,19 @@ main() {
     
     # Run code quality checks
     if ! run_quality_checks; then
-        ((overall_failures++))
+        overall_failures=$((overall_failures + 1))
     fi
     echo
     
     # Run unit tests
     if ! run_unit_tests; then
-        ((overall_failures++))
+        overall_failures=$((overall_failures + 1))
     fi
     echo
     
     # Run integration tests
     if ! run_integration_tests; then
-        ((overall_failures++))
+        overall_failures=$((overall_failures + 1))
     fi
     echo
     

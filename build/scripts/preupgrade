@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Pre-upgrade script for Bareos File Daemon
+
+BAREOS_CONFIG_DIR="/var/packages/bareos-fd/target/etc/bareos"
+BACKUP_DIR="/tmp/bareos-config-backup-$(date +%Y%m%d-%H%M%S)"
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-upgrade.log
+}
+
+log_info "Preparing for Bareos File Daemon upgrade..."
+
+# Stop the service
+if pgrep -f bareos-fd >/dev/null; then
+    log_info "Stopping Bareos File Daemon for upgrade..."
+    /var/packages/bareos-fd/scripts/start-stop-status stop
+fi
+
+# Backup configuration if requested
+if [ "${backup_config:-true}" = "true" ]; then
+    log_info "Backing up configuration to $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR"
+    cp -r "$BAREOS_CONFIG_DIR"/* "$BACKUP_DIR/" 2>/dev/null || true
+    echo "$BACKUP_DIR" > /tmp/bareos_config_backup_location
+fi
+
+log_info "Pre-upgrade completed successfully"
+exit 0

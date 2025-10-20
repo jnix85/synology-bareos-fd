@@ -1,0 +1,26 @@
+[{
+    "step_title": "Bareos File Daemon Upgrade",
+    "items": [{
+        "type": "textfield",
+        "desc": "Upgrade Configuration",
+        "subitems": [{
+            "key": "preserve_config",
+            "desc": "Preserve existing configuration",
+            "defaultValue": true,
+            "validator": {
+                "allowBlank": false
+            }
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "Backup Settings",
+        "subitems": [{
+            "key": "backup_config",
+            "desc": "Create configuration backup",
+            "defaultValue": true,
+            "validator": {
+                "allowBlank": false
+            }
+        }]
+    }]
+}]

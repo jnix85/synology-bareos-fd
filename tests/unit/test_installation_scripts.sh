@@ -6,13 +6,14 @@
 set -euo pipefail
 
 # Source test framework
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 source "$TEST_DIR/test_package_validation.sh" 2>/dev/null || {
     # If sourcing fails, define minimal framework
     log_info() { echo "[INFO] $1"; }
-    log_success() { echo "[PASS] $1"; ((PASSED_COUNT++)); }
-    log_error() { echo "[FAIL] $1"; ((FAILED_COUNT++)); }
+    log_success() { echo "[PASS] $1"; PASSED_COUNT=$((PASSED_COUNT + 1)); }
+    log_error() { echo "[FAIL] $1"; FAILED_COUNT=$((FAILED_COUNT + 1)); }
     TEST_COUNT=0; PASSED_COUNT=0; FAILED_COUNT=0
 }
 
@@ -64,7 +65,7 @@ test_preinst_script() {
     local script="$PROJECT_ROOT/scripts/preinst"
     
     # Test 1: Script executes without errors
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if timeout 30 bash "$script" >/dev/null 2>&1; then
         log_success "Pre-install script: Executes successfully"
     else
@@ -175,7 +176,7 @@ test_script_error_handling() {
         local full_path="$PROJECT_ROOT/$script"
         
         # Test for error logging functions
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if grep -q "log_error\|log_info" "$full_path"; then
             log_success "Error handling: $script has logging functions"
         else
@@ -183,7 +184,7 @@ test_script_error_handling() {
         fi
         
         # Test for exit codes
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if grep -q "exit [01]" "$full_path"; then
             log_success "Exit codes: $script has proper exit codes"
         else
@@ -277,7 +278,7 @@ test_script_execution_mock() {
     setup_mock_environment
     
     # Test pre-installation in mock environment
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     local preinst="$PROJECT_ROOT/scripts/preinst"
     
     # Create a modified version for testing

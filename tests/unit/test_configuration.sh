@@ -6,13 +6,14 @@
 set -euo pipefail
 
 # Source test framework
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+TEST_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 PROJECT_ROOT="$(dirname "$(dirname "$TEST_DIR")")"
 source "$TEST_DIR/test_package_validation.sh" 2>/dev/null || {
     # If sourcing fails, define minimal framework
     log_info() { echo "[INFO] $1"; }
-    log_success() { echo "[PASS] $1"; ((PASSED_COUNT++)); }
-    log_error() { echo "[FAIL] $1"; ((FAILED_COUNT++)); }
+    log_success() { echo "[PASS] $1"; PASSED_COUNT=$((PASSED_COUNT + 1)); }
+    log_error() { echo "[FAIL] $1"; FAILED_COUNT=$((FAILED_COUNT + 1)); }
     TEST_COUNT=0; PASSED_COUNT=0; FAILED_COUNT=0
 }
 
@@ -197,7 +198,7 @@ test_config_defaults() {
     )
     
     for default in "${defaults[@]}"; do
-        ((TEST_COUNT++))
+        TEST_COUNT=$((TEST_COUNT + 1))
         if grep -q "\${$default}" "$POSTINST_SCRIPT"; then
             log_success "Configuration defaults: $default found"
         else
@@ -220,7 +221,7 @@ test_config_syntax() {
     sed 's/\${[^}]*}/test_value/g' | \
     sed '/^\s*\$(if.*then$/,/^\s*fi)$/d' > "$temp_config"
     
-    ((TEST_COUNT++))
+    TEST_COUNT=$((TEST_COUNT + 1))
     if [[ -s "$temp_config" ]]; then
         # Basic syntax check - should have proper braces
         if grep -q "^[[:space:]]*}[[:space:]]*$" "$temp_config"; then

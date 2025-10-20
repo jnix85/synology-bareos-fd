@@ -1,0 +1,24 @@
+==============================================
+Bareos FD SPK - Service Management Tests
+==============================================
+
+[0;34m[INFO][0m Testing service script structure...
+[0;32m[PASS][0m Service management script: File exists - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Service script executable: File is executable - /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos user variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos home variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos binary variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Bareos config variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m PID file variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Command case statement: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Start command: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Stop command: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Status command: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Reload command: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;34m[INFO][0m Testing start functionality...
+[0;32m[PASS][0m Start message: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Running check: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Already running check: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Directory creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;32m[PASS][0m Ownership setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status
+[0;31m[FAIL][0m Configuration validation: Pattern '-t -c.*BAREOS_CONFIG' not found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/start-stop-status

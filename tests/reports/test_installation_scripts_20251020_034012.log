@@ -1,0 +1,100 @@
+================================================
+Bareos FD SPK - Installation Script Tests
+================================================
+
+[0;34m[INFO][0m Testing pre-installation script...
+[0;32m[PASS][0m Pre-install script: Executes successfully
+[0;32m[PASS][0m DSM version check: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Disk space check: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Variable saving: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Error logging: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;32m[PASS][0m Error exit handling: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preinst
+[0;34m[INFO][0m Testing post-installation script...
+[0;32m[PASS][0m Bareos home directory: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Bareos user variable: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Directory creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Ownership setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Permission setting: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Configuration generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Director block generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m FileDaemon block generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m SSL certificate generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m CA key generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m FD certificate generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Service script creation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log rotation setup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing pre-uninstall script...
+[0;32m[PASS][0m Process checking: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;32m[PASS][0m Service stopping: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;32m[PASS][0m Autostart removal: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;32m[PASS][0m Startup script cleanup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preuninst
+[0;34m[INFO][0m Testing post-uninstall script...
+[0;32m[PASS][0m File removal: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Service file cleanup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Log rotation cleanup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Optional log cleanup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;32m[PASS][0m Optional user removal: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postuninst
+[0;34m[INFO][0m Testing upgrade scripts...
+[0;32m[PASS][0m Configuration backup: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preupgrade
+[0;32m[PASS][0m Service stopping: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preupgrade
+[0;32m[PASS][0m Configuration backup copy: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/preupgrade
+[0;32m[PASS][0m Configuration preservation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postupgrade
+[0;32m[PASS][0m Service restart: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postupgrade
+[0;32m[PASS][0m Configuration validation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postupgrade
+[0;34m[INFO][0m Testing script error handling...
+[0;32m[PASS][0m Error handling: scripts/preinst has logging functions
+[0;32m[PASS][0m Exit codes: scripts/preinst has proper exit codes
+[0;32m[PASS][0m Error handling: scripts/postinst has logging functions
+[0;32m[PASS][0m Exit codes: scripts/postinst has proper exit codes
+[0;32m[PASS][0m Error handling: scripts/preuninst has logging functions
+[0;32m[PASS][0m Exit codes: scripts/preuninst has proper exit codes
+[0;32m[PASS][0m Error handling: scripts/postuninst has logging functions
+[0;32m[PASS][0m Exit codes: scripts/postuninst has proper exit codes
+[0;32m[PASS][0m Error handling: scripts/preupgrade has logging functions
+[0;32m[PASS][0m Exit codes: scripts/preupgrade has proper exit codes
+[0;32m[PASS][0m Error handling: scripts/postupgrade has logging functions
+[0;32m[PASS][0m Exit codes: scripts/postupgrade has proper exit codes
+[0;34m[INFO][0m Testing script variable validation...
+[0;32m[PASS][0m Variable definition: BAREOS_HOME: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Variable definition: BAREOS_USER: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Variable definition: BAREOS_CONFIG_DIR: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Variable definition: BAREOS_WORK_DIR: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: bareos_director_host: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: fd_name: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: fd_password: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: fd_port: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: backup_locations: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: enable_ssl: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: enable_compression: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Wizard variable usage: enable_autostart: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing configuration file generation...
+[0;32m[PASS][0m Main config generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Director block in script: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m FileDaemon block in script: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Messages block in script: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Config directory structure: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Client config generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m SSL conditional logic: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m RSA key generation: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate request: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Certificate signing: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing service integration...
+[0;32m[PASS][0m Service directory: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Service script name: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Autostart logic: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Startup script integration: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log rotation config: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log rotation frequency: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;32m[PASS][0m Log rotation hook: Pattern found in /Users/jparks/files/src/synology/packages/bareos-fd/scripts/postinst
+[0;34m[INFO][0m Testing script execution in mock environment...
+[0;34m[INFO][0m Setting up mock environment for script testing...
+[0;32m[PASS][0m Mock execution: Pre-install script runs in mock environment
+[0;34m[INFO][0m Cleaning up mock environment...
+
+================================================
+Installation Script Test Results:
+================================================
+Total Tests: 76
+Passed: 76
+Failed: 0
+✓ All installation script tests passed!
