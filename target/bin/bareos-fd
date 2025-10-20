@@ -1,0 +1,3 @@
+#!/bin/bash
+# Bareos File Daemon wrapper script
+exec /var/packages/bareos-fd/target/lib/bareos/bareos-fd "$@"

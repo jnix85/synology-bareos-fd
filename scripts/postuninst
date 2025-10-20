@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Post-uninstall script for Bareos File Daemon
+
+BAREOS_USER="bareos"
+BAREOS_WORK_DIR="/var/lib/bareos"
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-uninstall.log
+}
+
+log_info "Cleaning up Bareos File Daemon..."
+
+# Remove service files
+rm -f /usr/local/etc/rc.d/bareos-fd.sh
+rm -f /etc/logrotate.d/bareos-fd
+
+# Remove log files (optional - user might want to keep them)
+# Uncomment if you want to remove logs during uninstall
+# rm -rf /var/log/bareos
+
+# Remove working directory (optional - contains backup state)
+# Uncomment if you want to remove working directory during uninstall
+# rm -rf "$BAREOS_WORK_DIR"
+
+# Remove user (optional - might be used by other services)
+# Uncomment if you want to remove the user during uninstall
+# if id "$BAREOS_USER" >/dev/null 2>&1; then
+#     log_info "Removing bareos user..."
+#     /usr/syno/sbin/synouser --del "$BAREOS_USER"
+# fi
+
+log_info "Bareos File Daemon uninstalled successfully"
+log_info "Configuration and logs have been preserved"
+exit 0

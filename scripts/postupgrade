@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Post-upgrade script for Bareos File Daemon
+
+BAREOS_CONFIG_DIR="/var/packages/bareos-fd/target/etc/bareos"
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-upgrade.log
+}
+
+log_info "Completing Bareos File Daemon upgrade..."
+
+# Restore configuration if preserve_config is enabled
+if [ "${preserve_config:-true}" = "true" ] && [ -f /tmp/bareos_config_backup_location ]; then
+    BACKUP_DIR=$(cat /tmp/bareos_config_backup_location)
+    if [ -d "$BACKUP_DIR" ]; then
+        log_info "Restoring configuration from backup..."
+        cp -r "$BACKUP_DIR"/* "$BAREOS_CONFIG_DIR/" 2>/dev/null || true
+        
+        # Validate restored configuration
+        if /var/packages/bareos-fd/target/bin/bareos-fd -t -c "$BAREOS_CONFIG_DIR/bareos-fd.conf"; then
+            log_info "Configuration restored and validated successfully"
+        else
+            log_info "Warning: Configuration validation failed after restore"
+        fi
+    fi
+    
+    # Clean up backup location file
+    rm -f /tmp/bareos_config_backup_location
+fi
+
+# Start the service
+log_info "Starting upgraded Bareos File Daemon..."
+/var/packages/bareos-fd/scripts/start-stop-status start
+
+log_info "Upgrade completed successfully"
+exit 0

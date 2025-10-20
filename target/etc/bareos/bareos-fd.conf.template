@@ -1,0 +1,24 @@
+#
+# Default Bareos File Daemon Configuration Template
+# This file will be replaced during installation with user-specific settings
+#
+
+Director {
+  Name = bareos-dir
+  Password = "changeme"
+}
+
+FileDaemon {
+  Name = bareos-fd
+  FDport = 9102
+  WorkingDirectory = /var/lib/bareos
+  Pid Directory = /var/run/bareos
+  Plugin Directory = /var/packages/bareos-fd/target/lib/bareos/plugins
+  Maximum Concurrent Jobs = 20
+}
+
+Messages {
+  Name = Standard
+  director = bareos-dir = all, !skipped, !restored
+  File = /var/log/bareos/bareos-fd.log = all, !skipped
+}

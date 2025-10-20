@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Pre-uninstall script for Bareos File Daemon
+
+BAREOS_USER="bareos"
+BAREOS_HOME="/var/packages/bareos-fd/target"
+
+log_info() {
+    echo "[INFO] $1" | tee -a /var/log/bareos-uninstall.log
+}
+
+log_info "Preparing to uninstall Bareos File Daemon..."
+
+# Stop the service if running
+if pgrep -f bareos-fd >/dev/null; then
+    log_info "Stopping Bareos File Daemon..."
+    /var/packages/bareos-fd/scripts/start-stop-status stop
+fi
+
+# Remove from autostart
+log_info "Removing from autostart..."
+sed -i '/bareos-fd/d' /usr/local/etc/rc.local 2>/dev/null || true
+
+log_info "Pre-uninstall completed successfully"
+exit 0

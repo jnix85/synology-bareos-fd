@@ -1,0 +1,495 @@
+{
+  // Linux Systems Administration Toolsets for VS Code
+  // Comprehensive collection of Linux administration and DevOps toolsets
+  // Import into VS Code via Command Palette: "Powershell: Import Toolsets"
+  
+  "toolsets": [
+    {
+      "name": "Linux System Administration",
+      "description": "Core Linux system administration commands for daily operations",
+      "tools": [
+        {
+          "name": "System Information",
+          "description": "Display comprehensive system information",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "uname -a",
+              "lsb_release -a",
+              "hostnamectl",
+              "uptime",
+              "who",
+              "last | head -10"
+            ]
+          }
+        },
+        {
+          "name": "Process Management",
+          "description": "Monitor and manage system processes",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ps auxf",
+              "top -b -n1 | head -20",
+              "pstree",
+              "systemctl list-units --type=service --state=running | head -20"
+            ]
+          }
+        },
+        {
+          "name": "Resource Monitoring",
+          "description": "Check system resource usage",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "free -h",
+              "df -h",
+              "iostat -x 1 3",
+              "vmstat 1 3",
+              "lscpu | head -20"
+            ]
+          }
+        },
+        {
+          "name": "Network Diagnostics",
+          "description": "Network configuration and connectivity tests",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ip addr show",
+              "ip route show",
+              "ss -tuln",
+              "ping -c 4 8.8.8.8",
+              "dig google.com"
+            ]
+          }
+        },
+        {
+          "name": "Log Analysis",
+          "description": "Analyze system logs for issues",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "journalctl --since '1 hour ago' --no-pager | tail -50",
+              "tail -50 /var/log/syslog",
+              "grep -i error /var/log/messages | tail -20",
+              "dmesg | tail -30"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Container Management",
+      "description": "Docker and Kubernetes container operations",
+      "tools": [
+        {
+          "name": "Docker Status",
+          "description": "Check Docker containers and images",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "docker ps -a",
+              "docker images",
+              "docker system df",
+              "docker network ls",
+              "docker volume ls"
+            ]
+          }
+        },
+        {
+          "name": "Kubernetes Cluster Info",
+          "description": "Display Kubernetes cluster status",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "kubectl cluster-info",
+              "kubectl get nodes -o wide",
+              "kubectl get pods -A",
+              "kubectl get services -A",
+              "kubectl top nodes"
+            ]
+          }
+        },
+        {
+          "name": "Container Logs",
+          "description": "View container and pod logs",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"Docker container logs:\"; docker ps --format \"table {{.Names}}\t{{.Status}}\"; echo -e \"\\nKubernetes pod logs:\"; kubectl get pods -A --field-selector=status.phase!=Succeeded | head -10'"
+          }
+        },
+        {
+          "name": "Resource Usage",
+          "description": "Monitor container resource consumption",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "docker stats --no-stream",
+              "kubectl top pods -A | head -20",
+              "kubectl get hpa -A"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Security and Compliance",
+      "description": "Security monitoring and compliance checking tools",
+      "tools": [
+        {
+          "name": "Security Scan",
+          "description": "Run basic security checks",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "last | head -10",
+              "grep -i failed /var/log/auth.log | tail -10",
+              "ss -tuln | grep :22",
+              "find /etc -name '*.conf' -perm -002 -type f 2>/dev/null | head -10",
+              "chage -l root"
+            ]
+          }
+        },
+        {
+          "name": "File Permissions Audit",
+          "description": "Check critical file permissions",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ls -la /etc/passwd /etc/shadow /etc/hosts",
+              "find /home -type f -perm -002 2>/dev/null | head -10",
+              "find /tmp -type f -perm -002 2>/dev/null | head -10"
+            ]
+          }
+        },
+        {
+          "name": "Firewall Status",
+          "description": "Check firewall configuration",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ufw status verbose",
+              "iptables -L -n | head -20",
+              "systemctl status firewalld",
+              "firewall-cmd --list-all 2>/dev/null || echo 'Firewalld not active'"
+            ]
+          }
+        },
+        {
+          "name": "Package Security",
+          "description": "Check for package updates and vulnerabilities",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "apt list --upgradable 2>/dev/null | head -20 || dnf check-update | head -20",
+              "which lynis && lynis --check-update || echo 'Lynis not installed'",
+              "dpkg -l | grep -i security | head -10 || rpm -qa | grep -i security | head -10"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Performance Monitoring",
+      "description": "Advanced performance monitoring and analysis",
+      "tools": [
+        {
+          "name": "CPU Analysis",
+          "description": "Detailed CPU performance analysis",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"CPU Usage by Core:\"; mpstat -P ALL 1 3; echo -e \"\\nTop CPU Processes:\"; ps aux --sort=-%cpu | head -10'"
+          }
+        },
+        {
+          "name": "Memory Analysis",
+          "description": "Memory usage breakdown and analysis",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "free -h",
+              "cat /proc/meminfo | head -20",
+              "ps aux --sort=-%mem | head -10",
+              "slabtop -o | head -20",
+              "vmstat -s | head -15"
+            ]
+          }
+        },
+        {
+          "name": "Disk I/O Analysis",
+          "description": "Disk performance and I/O statistics",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"Disk Usage:\"; df -h; echo -e \"\\nI/O Statistics:\"; iostat -x 1 3; echo -e \"\\nDisk Activity:\"; iotop -a -o -d 2 -n 3'"
+          }
+        },
+        {
+          "name": "Network Performance",
+          "description": "Network interface statistics and performance",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "cat /proc/net/dev",
+              "ss -i",
+              "netstat -i",
+              "ethtool eth0 2>/dev/null || echo 'ethtool not available or eth0 not found'",
+              "tc qdisc show"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "DevOps Automation",
+      "description": "CI/CD, automation, and infrastructure tools",
+      "tools": [
+        {
+          "name": "Git Repository Status",
+          "description": "Check Git repositories and deployment status",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "git status",
+              "git log --oneline -10",
+              "git branch -a",
+              "git remote -v"
+            ]
+          }
+        },
+        {
+          "name": "Ansible Status",
+          "description": "Check Ansible configuration and inventory",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ansible --version",
+              "ansible-inventory --list | head -30",
+              "ansible all -m ping --one-line",
+              "ansible-config dump | head -20"
+            ]
+          }
+        },
+        {
+          "name": "Terraform State",
+          "description": "Check Terraform infrastructure state",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "terraform version",
+              "terraform workspace list",
+              "terraform state list | head -20",
+              "terraform plan -detailed-exitcode"
+            ]
+          }
+        },
+        {
+          "name": "CI/CD Pipeline Status",
+          "description": "Check CI/CD tools and pipeline status",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "systemctl status jenkins || echo 'Jenkins not installed'",
+              "docker ps | grep -E '(jenkins|gitlab|drone)' || echo 'No CI/CD containers running'",
+              "kubectl get pods -A | grep -E '(jenkins|gitlab|argo|tekton)' || echo 'No CI/CD pods found'"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Database Operations",
+      "description": "Database administration and monitoring tools",
+      "tools": [
+        {
+          "name": "Database Services",
+          "description": "Check database service status",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "systemctl status postgresql || echo 'PostgreSQL not installed'",
+              "systemctl status mysql || echo 'MySQL not installed'",
+              "systemctl status redis || echo 'Redis not installed'",
+              "systemctl status mongodb || echo 'MongoDB not installed'"
+            ]
+          }
+        },
+        {
+          "name": "Database Connections",
+          "description": "Monitor database connections and performance",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"Database Ports:\"; ss -tuln | grep -E \":(3306|5432|6379|27017)\"; echo -e \"\\nDatabase Processes:\"; ps aux | grep -E \"(postgres|mysql|redis|mongo)\" | grep -v grep'"
+          }
+        },
+        {
+          "name": "PostgreSQL Quick Check",
+          "description": "PostgreSQL database health check",
+          "command": "start_process",
+          "args": {
+            "command": "sudo -u postgres psql -c \"SELECT version();\" -c \"SELECT datname FROM pg_database;\" -c \"SELECT count(*) as active_connections FROM pg_stat_activity;\" 2>/dev/null || echo 'PostgreSQL not accessible'"
+          }
+        },
+        {
+          "name": "MySQL Quick Check",
+          "description": "MySQL database health check",
+          "command": "start_process",
+          "args": {
+            "command": "mysql -e \"SELECT VERSION();\" -e \"SHOW DATABASES;\" -e \"SHOW PROCESSLIST;\" 2>/dev/null || echo 'MySQL not accessible'"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Backup and Recovery",
+      "description": "Backup verification and recovery tools",
+      "tools": [
+        {
+          "name": "Backup Status",
+          "description": "Check backup jobs and storage",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "systemctl status backup.service || echo 'No backup service configured'",
+              "ls -la /backup/ || echo 'No /backup directory'",
+              "find /var/backups -type f -mtime -1 2>/dev/null | head -10 || echo 'No recent backups found'",
+              "df -h | grep backup || echo 'No backup mounts'"
+            ]
+          }
+        },
+        {
+          "name": "Rsync Status",
+          "description": "Check rsync backup operations",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ps aux | grep rsync | grep -v grep",
+              "systemctl status rsync || echo 'Rsync service not configured'",
+              "cat /var/log/rsync.log 2>/dev/null | tail -20 || echo 'No rsync logs found'"
+            ]
+          }
+        },
+        {
+          "name": "Snapshot Status",
+          "description": "Check LVM and filesystem snapshots",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "lvs | grep snap || echo 'No LVM snapshots'",
+              "btrfs subvolume list / 2>/dev/null || echo 'No BTRFS subvolumes'",
+              "zfs list -t snapshot 2>/dev/null || echo 'No ZFS snapshots'"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Troubleshooting Kit",
+      "description": "Emergency troubleshooting and diagnostic tools",
+      "tools": [
+        {
+          "name": "System Health Check",
+          "description": "Comprehensive system health assessment",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"=== SYSTEM HEALTH CHECK ===\"; echo \"Load Average: $(uptime)\"; echo \"Memory: $(free -h | grep Mem)\"; echo \"Disk: $(df -h / | tail -1)\"; echo \"Failed Services:\"; systemctl --failed | head -10; echo \"Recent Errors:\"; journalctl -p err --since \"1 hour ago\" --no-pager | tail -10'"
+          }
+        },
+        {
+          "name": "Network Connectivity Test",
+          "description": "Test network connectivity and DNS resolution",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "ping -c 3 8.8.8.8",
+              "dig google.com",
+              "nslookup google.com",
+              "traceroute -n 8.8.8.8 | head -10",
+              "curl -I https://google.com"
+            ]
+          }
+        },
+        {
+          "name": "Service Dependencies",
+          "description": "Check service dependencies and conflicts",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "systemctl list-dependencies | head -20",
+              "systemctl list-units --failed",
+              "systemctl is-system-running",
+              "journalctl -b | grep -i failed | tail -10"
+            ]
+          }
+        },
+        {
+          "name": "Emergency Cleanup",
+          "description": "Clean up disk space and temporary files",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "df -h",
+              "du -sh /tmp /var/tmp /var/log",
+              "find /tmp -type f -atime +7 | wc -l",
+              "journalctl --disk-usage",
+              "docker system df 2>/dev/null || echo 'Docker not available'"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cloud Platform Tools",
+      "description": "Cloud platform management and monitoring",
+      "tools": [
+        {
+          "name": "AWS CLI Status",
+          "description": "Check AWS configuration and resources",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "aws --version",
+              "aws sts get-caller-identity",
+              "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,State.Name,InstanceType]' --output table",
+              "aws s3 ls"
+            ]
+          }
+        },
+        {
+          "name": "Azure CLI Status",
+          "description": "Check Azure configuration and resources",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "az --version",
+              "az account show",
+              "az vm list --output table",
+              "az storage account list --output table"
+            ]
+          }
+        },
+        {
+          "name": "Google Cloud Status",
+          "description": "Check GCP configuration and resources",
+          "command": "runCommands",
+          "args": {
+            "commands": [
+              "gcloud version",
+              "gcloud auth list",
+              "gcloud compute instances list",
+              "gcloud storage buckets list"
+            ]
+          }
+        },
+        {
+          "name": "Multi-Cloud Summary",
+          "description": "Quick status across all cloud platforms",
+          "command": "start_process",
+          "args": {
+            "command": "bash -c 'echo \"=== CLOUD PLATFORM STATUS ===\"; echo \"AWS:\"; aws sts get-caller-identity 2>/dev/null || echo \"Not configured\"; echo \"Azure:\"; az account show --query name -o tsv 2>/dev/null || echo \"Not configured\"; echo \"GCP:\"; gcloud config get-value project 2>/dev/null || echo \"Not configured\"'"
+          }
+        }
+      ]
+    }
+  ]
+}
